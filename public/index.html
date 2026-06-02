@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Laboratorio - Regresión Lineal (Auto MPG)</title>
+    <meta name="description" content="Reporte interactivo de los resultados del modelo de Regresión Lineal aplicado al dataset Auto-MPG.">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="background-effect"></div>
+    <header class="header">
+        <div class="header-container">
+            <h1 class="logo">Lab<span class="highlight">Auto</span>MPG</h1>
+            <nav class="nav">
+                <a href="#dataset" class="nav-link">Dataset</a>
+                <a href="#variables" class="nav-link">Variables</a>
+                <a href="#preprocesamiento" class="nav-link">Preprocesamiento</a>
+                <a href="#resultados" class="nav-link">Resultados</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero glass-panel">
+            <div class="hero-content">
+                <div class="badge">Evaluación de Modelo Sklearn</div>
+                <h2 class="hero-title">Análisis de Consumo de Combustible con <span>Regresión Lineal</span></h2>
+                <p class="hero-subtitle">Descubre qué características mecánicas afectan más el consumo de gasolina en vehículos de 1970 a 1982 usando Machine Learning.</p>
+                <a href="#resultados" class="cta-btn">Ver Resultados del Modelo</a>
+            </div>
+            <div class="hero-image">
+                <div class="car-illustration">
+                    <ion-icon name="car-sport"></ion-icon>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid-layout">
+            <!-- Dataset y Variables -->
+            <section id="dataset" class="section glass-panel">
+                <div class="section-header">
+                    <ion-icon name="server-outline"></ion-icon>
+                    <h3>1. El Dataset</h3>
+                </div>
+                <p>Utilizamos el dataset <strong>Auto MPG</strong> del repositorio UCI Machine Learning. Recopila datos de vehículos fabricados en EE.UU., Europa y Japón (1970-1982), originalmente recolectados para estudiar el consumo de combustible.</p>
+            </section>
+
+            <section id="variables" class="section glass-panel">
+                <div class="section-header">
+                    <ion-icon name="git-network-outline"></ion-icon>
+                    <h3>2. Selección de Variables</h3>
+                </div>
+                <div class="variables-container">
+                    <div class="variable-card dep">
+                        <h4>Variable Dependiente (Y)</h4>
+                        <div class="var-tag y-var">mpg (Millas por galón)</div>
+                        <p>Es lo que queremos predecir: cuánta gasolina consume el carro.</p>
+                    </div>
+                    <div class="variable-card indep">
+                        <h4>Independientes (X)</h4>
+                        <div class="var-tags">
+                            <span class="var-tag x-var">horsepower</span>
+                            <span class="var-tag x-var">weight</span>
+                            <span class="var-tag x-var">displacement</span>
+                        </div>
+                        <p>Se eligieron porque tienen una relación física directa con el consumo y son continuas, ideales para regresión lineal.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tabla de Datos -->
+        <section id="tabla-datos" class="section glass-panel">
+            <div class="section-header">
+                <ion-icon name="list-outline"></ion-icon>
+                <h3>Explorar el Dataset</h3>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr id="table-head">
+                            <!-- Headers se generan por JS -->
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Filas se generan por JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button id="prev-btn" class="page-btn" disabled><ion-icon name="chevron-back-outline"></ion-icon> Anterior</button>
+                <span id="page-info" class="page-info">Página 1 de X</span>
+                <button id="next-btn" class="page-btn">Siguiente <ion-icon name="chevron-forward-outline"></ion-icon></button>
+            </div>
+        </section>
+
+        <!-- Preprocesamiento -->
+        <section id="preprocesamiento" class="section glass-panel">
+            <div class="section-header">
+                <ion-icon name="filter-outline"></ion-icon>
+                <h3>3. Preprocesamiento de Datos</h3>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon"><ion-icon name="close-circle-outline"></ion-icon></div>
+                    <h4>Datos Nulos</h4>
+                    <p>Se eliminaron las filas sin datos completos en <code>horsepower</code>.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon"><ion-icon name="copy-outline"></ion-icon></div>
+                    <h4>Duplicados</h4>
+                    <p>No se encontraron datos duplicados en el set de datos.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon"><ion-icon name="text-outline"></ion-icon></div>
+                    <h4>Categóricas</h4>
+                    <p>Todas las variables elegidas son numéricas, sin necesidad de encoding.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon"><ion-icon name="analytics-outline"></ion-icon></div>
+                    <h4>Outliers</h4>
+                    <p>Se detectaron y analizaron datos anómalos usando el método de Rango Intercuartílico (IQR).</p>
+                    <p>Posteriormente, los datos numéricos fueron estandarizados mediante <code>StandardScaler</code> de scikit‑learn, garantizando media 0 y varianza 1, lo que mejora la estabilidad del algoritmo de regresión lineal.</p>
+                </div>
+            </div>
+        </section>
+
+                <!-- División del conjunto de datos -->
+        <section id="division" class="section glass-panel">
+            <div class="section-header">
+                <ion-icon name="share-outline"></ion-icon>
+                <h3>División del Dataset</h3>
+            </div>
+            <p>Para entrenar y evaluar el modelo se utilizó <code>train_test_split</code> con una proporción 80 % entrenamiento / 20 % prueba y <code>random_state=42</code> para garantizar reproducibilidad. Esta separación permite estimar el desempeño del modelo en datos no vistos y evitar sobre‑ajuste.</p>
+        </section>
+        
+
+        <!-- Resultados del Modelo -->
+        <section id="resultados" class="section glass-panel results-section">
+            <div class="section-header">
+                <ion-icon name="bar-chart-outline"></ion-icon>
+                <h3>4. Resultados de la Evaluación (Sklearn)</h3>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">62.3%</div>
+                    <div class="metric-label">Coeficiente de Determinación (R²)</div>
+                    <p class="metric-desc">El modelo explica el 62.3% de la variación en el consumo de combustible.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4.42</div>
+                    <div class="metric-label">Error RMSE (mpg)</div>
+                    <p class="metric-desc">En promedio, las predicciones del modelo se equivocan por ±4.42 millas por galón.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">19.57</div>
+                    <div class="metric-label">MSE</div>
+                    <p class="metric-desc">Error Cuadrático Medio de las predicciones.</p>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h4>Reales vs Predichos</h4>
+                    <div class="chart-container">
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+                    <p class="chart-caption">Idealmente, los puntos deberían agruparse sobre la diagonal perfecta. Nuestro modelo sigue una tendencia clara.</p>
+                </div>
+                <div class="chart-wrapper">
+                    <h4>Distribución de Residuos</h4>
+                    <div class="chart-container">
+                        <canvas id="residualChart"></canvas>
+                    </div>
+                    <p class="chart-caption">Los residuos (errores) deben estar distribuidos aleatoriamente alrededor de cero sin patrones claros.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Elaborado como reporte de evaluación de modelo de Regresión Lineal.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
